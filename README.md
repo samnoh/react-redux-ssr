@@ -1,3 +1,3 @@
-# React Server Rendering
+# React Server Side Rendering
 
-with code splitting
+With code splitting

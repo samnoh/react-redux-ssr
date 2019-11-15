@@ -24,13 +24,13 @@ export const serverRender = async (req, res) => {
     const routerContext = {};
 
     const jsx = (
-        <PreloadContext.Provider value={preloadContext}>
-            <Provider store={store}>
-                <StaticRouter location={req.url} context={routerContext}>
+        <StaticRouter location={req.url} context={routerContext}>
+            <PreloadContext.Provider value={preloadContext}>
+                <Provider store={store}>
                     <App />
-                </StaticRouter>
-            </Provider>
-        </PreloadContext.Provider>
+                </Provider>
+            </PreloadContext.Provider>
+        </StaticRouter>
     );
 
     ReactDOMServer.renderToStaticMarkup(jsx);

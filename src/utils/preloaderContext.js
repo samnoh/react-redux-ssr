@@ -1,7 +1,9 @@
 import { createContext, useContext } from 'react';
 
-// 클라이언트 환경: null
-// 서버 환경:{ done: false, promises: [] }
+// resolve: () => {}
+// null for client
+// { done: false, promises: [] } for server
+
 const PreloadContext = createContext(null);
 
 export const Preloader = ({ resolve }) => {

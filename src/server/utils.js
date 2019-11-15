@@ -9,7 +9,7 @@ const chunks = Object.keys(manifest)
     .map(key => `<script src="${manifest[key]}"></script>`)
     .join('');
 
-export const createPage = (root, tags) => {
+export const createPage = (root, stateScript) => {
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +29,7 @@ export const createPage = (root, tags) => {
     <div id="root">
     ${root}
     </div>
+    <script>__PRELOADED_STATE__ = ${stateScript}</script>
     <script src="${manifest['runtime-main.js']}"></script>
     ${chunks}
     <script src="${manifest['main.js']}"></script>

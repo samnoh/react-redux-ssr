@@ -9,14 +9,11 @@ const app = express();
 app.set('port', process.env.PORT || 8000);
 
 app.use(morgan('dev'));
-
 app.use(
     express.static(path.resolve('./build'), {
         index: false
     })
 );
-
-// middlewares
 app.use(serverRender);
 
 app.listen(app.get('port'), () => {

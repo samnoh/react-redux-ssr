@@ -23,7 +23,7 @@ export const serverRender = async (req, res) => {
 
     const routerContext = {};
 
-    const jsx = (
+    const markup = (
         <StaticRouter location={req.url} context={routerContext}>
             <PreloadContext.Provider value={preloadContext}>
                 <Provider store={store}>
@@ -33,8 +33,12 @@ export const serverRender = async (req, res) => {
         </StaticRouter>
     );
 
-    ReactDOMServer.renderToStaticMarkup(jsx);
+    ReactDOMServer.renderToStaticMarkup(markup);
     store.dispatch(END);
+
+    if (routerContext.statusCode) {
+        res.status(routerContext.statusCode);
+    }
 
     try {
         await sagaPromise;
@@ -45,7 +49,7 @@ export const serverRender = async (req, res) => {
 
     preloadContext.done = true;
 
-    const root = ReactDOMServer.renderToString(jsx);
+    const root = ReactDOMServer.renderToString(markup);
     const stateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
 
     res.send(createPage(root, stateString));

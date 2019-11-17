@@ -1,4 +1,4 @@
-export const createPage = (root, tags) => {
+export const createPage = (root, tags, helmet) => {
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,8 @@ export const createPage = (root, tags) => {
     content="width=device-width,initial-scale=1,shrink-to-fit=no"
     />
     <meta name="theme-color" content="#000000" />
-    <title>React App</title>
+    ${helmet.meta.toString()}
+    ${helmet.title.toString()}
     ${tags.styles}
     ${tags.links}
 </head>

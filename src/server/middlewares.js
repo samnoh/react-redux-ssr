@@ -6,6 +6,7 @@ import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware, { END } from 'redux-saga';
+import { Helmet } from 'react-helmet';
 
 import App from 'App';
 import { createPage } from './utils';
@@ -67,5 +68,7 @@ export const serverRender = async (req, res) => {
         styles: extractor.getStyleTags()
     };
 
-    res.send(createPage(root, tags));
+    const helmet = Helmet.renderStatic();
+
+    res.send(createPage(root, tags, helmet));
 };

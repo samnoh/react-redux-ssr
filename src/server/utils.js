@@ -1,15 +1,4 @@
-import path from 'path';
-import fs from 'fs';
-
-const manifest = JSON.parse(fs.readFileSync(path.resolve('./build/asset-manifest.json'), 'utf8'))
-    .files;
-
-const chunks = Object.keys(manifest)
-    .filter(key => /chunk\.js$/.exec(key))
-    .map(key => `<script src="${manifest[key]}"></script>`)
-    .join('');
-
-export const createPage = (root, stateScript) => {
+export const createPage = (root, tags) => {
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -22,17 +11,15 @@ export const createPage = (root, stateScript) => {
     />
     <meta name="theme-color" content="#000000" />
     <title>React App</title>
-    <link href="${manifest['main.css']}" rel="stylesheet" />
+    ${tags.styles}
+    ${tags.links}
 </head>
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
     ${root}
     </div>
-    <script>__PRELOADED_STATE__ = ${stateScript}</script>
-    <script src="${manifest['runtime-main.js']}"></script>
-    ${chunks}
-    <script src="${manifest['main.js']}"></script>
+    ${tags.scripts}
 </body>
 </html>`;
 };
